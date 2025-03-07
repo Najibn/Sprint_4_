@@ -14,4 +14,7 @@
             </div>
         </div>
     </div>
-</x-app-layout>
+</x-app-layout> 
+
+
+<!-- make entry point for role admin later resources/views/dashboard.blade.php -->
