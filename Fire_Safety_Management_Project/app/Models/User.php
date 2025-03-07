@@ -4,6 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
@@ -20,7 +21,8 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
-        'password',
+        'password',   
+        'role',
     ];
 
     /**
@@ -43,6 +45,27 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'role' => 'string',
         ];
+    }
+
+    protected $casts = [
+        'role' => 'string',
+    ];
+
+
+    public function products()
+    {
+        return $this->hasMany(Product::class);
+    }
+
+    public function maintenanceRecords()
+    {
+        return $this->hasMany(MaintenanceRecord::class, 'technician_id');
+    }
+
+    public function isAdmin()
+    {
+        return $this->role === 'admin';
     }
 }
