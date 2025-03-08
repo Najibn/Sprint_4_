@@ -18,6 +18,11 @@ class MaintenanceRecord extends Model
         'notes',
     ];
 
+
+    // protected $casts = [
+    //     'maintenance_date' => 'date',
+    // ];
+
      // Relationship: A maintenance record belongs to a product
      public function product()
      {
