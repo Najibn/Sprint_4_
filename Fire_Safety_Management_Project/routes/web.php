@@ -13,9 +13,9 @@ Route::get('/', function () {
     return view('welcome');
 });
 
- /*Route::get('/dashboard', function () {
+ Route::get('/dashboard', function () {
      return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');*/
+})->middleware(['auth', 'verified'])->name('dashboard');
 
 //breeze profile rouetes
 Route::middleware('auth')->group(function () {
@@ -24,9 +24,10 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-//using resource for routes for CRUD operations on the User/products and MaintenanceRecord models.
+//using resource for routes for CRUD operations.
 Route::resource('users', UserController::class);
 Route::resource('products', ProductController::class);
+Route::resource('maintenanceRecords', MaintenanceRecordController::class);
 
 //dashboard route
 
