@@ -53,7 +53,7 @@ class UserController extends Controller
     }
 
 
-    // Update a specific user
+    //
     public function update(Request $request, User $user)
     {
         $validatedData = $request->validate([
