@@ -1,76 +1,98 @@
 <x-app-layout>
-    <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-        <div class="p-6 bg-white border-b border-gray-200">
-            <h2 class="text-xl font-bold mb-4">Edit User</h2>
+    <div class="flex h-screen bg-gray-100">
+        <!-- Sidebar -->
+        <div class="fixed top-0 left-0 h-full w-64 bg-indigo-800 text-white shadow-md">
+            <div class="p-4">
+                <h1 class="text-2xl font-semibold">Fire Safety</h1>
+            </div>
+            <nav class="mt-6">
+                <a href="{{ route('dashboard') }}" class="block py-2 px-4 hover:bg-indigo-700">
+                    <i class="fas fa-list mr-2"></i>Dashboard
+                </a>
+                <a href="{{ route('users.index') }}" class="block py-2 px-4 bg-indigo-900">
+                    <i class="fas fa-users mr-2"></i>Manage Users
+                </a>
+                <a href="{{ route('products.index') }}" class="block py-2 px-4 hover:bg-indigo-700">
+                    <i class="fas fa-box mr-2"></i>Manage Products
+                </a>
+                <a href="{{ route('maintenanceRecords.index') }}" class="block py-2 px-4 hover:bg-indigo-700">
+                    <i class="fas fa-wrench mr-2"></i>Manage Records
+                </a>
+                <a href="#" class="block py-2 px-4 hover:bg-indigo-700">
+                    <i class="fas fa-chart-bar mr-2"></i>Reports
+                </a>
+            </nav>
+            <div class="mt-auto p-4">
+                <a href="#" class="block py-2 px-4 hover:bg-indigo-700">
+                    <i class="fas fa-comment mr-2"></i>Give Feedback
+                </a>
+                <a href="#" class="block py-2 px-4 hover:bg-indigo-700">
+                    <i class="fas fa-info-circle mr-2"></i>About
+                </a>
+                <a href="{{ route('profile.edit') }}" class="block py-2 px-4 hover:bg-indigo-700">
+                    <i class="fas fa-cog mr-2"></i>Settings
+                </a>
+            </div>
+        </div>
 
-            <!-- Display Validation Errors -->
-            @if ($errors->any())
-                <div class="mb-4">
-                    <ul class="list-disc list-inside text-sm text-red-600">
-                        @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                </div>
-            @endif
+        <!-- Main Content -->
+        <div class="ml-64 p-8 w-full">
+            <div class="flex items-center justify-between">
+                <h2 class="text-3xl font-bold mb-6 text-gray-800">Edit User</h2>
+                {{-- <a href="{{ route('users.index') }}" class="px-4 py-2 bg-gray-600 text-white rounded-md hover:bg-gray-700">
+                    Back to Users List
+                </a> --}}
+            </div>
 
-            <!-- Edit Form -->
-            <form action="{{ route('users.update', $user) }}" method="POST">
-                @csrf
-                @method('PUT')
+            <div class="bg-white shadow-lg rounded-lg p-6">
+                <form action="{{ route('users.update', $user) }}" method="POST">
+                    @csrf
+                    @method('PUT')
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="space-y-4">
+                            <div>
+                                <label for="name" class="text-gray-700 font-medium">Name</label>
+                                <input type="text" id="name" name="name" value="{{ old('name', $user->name) }}" class="w-full px-4 py-2 mt-2 border rounded-md" required>
+                                @error('name') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
+                            </div>
 
-                <!-- Name -->
-                <div class="mb-4">
-                    <label for="name" class="block text-gray-700 font-bold mb-2">Name:</label>
-                    <input type="text" name="name" id="name" value="{{ old('name', $user->name) }}" required
-                           class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-                </div>
+                            <div>
+                                <label for="email" class="text-gray-700 font-medium">Email</label>
+                                <input type="email" id="email" name="email" value="{{ old('email', $user->email) }}" class="w-full px-4 py-2 mt-2 border rounded-md" required>
+                                @error('email') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
+                            </div>
 
-                <!-- Email -->
-                <div class="mb-4">
-                    <label for="email" class="block text-gray-700 font-bold mb-2">Email:</label>
-                    <input type="email" name="email" id="email" value="{{ old('email', $user->email) }}" required
-                           class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-                </div>
+                            <div>
+                                <label for="role" class="text-gray-700 font-medium">Role</label>
+                                <select id="role" name="role" class="w-full px-4 py-2 mt-2 border rounded-md" required>
+                                    <option value="admin" {{ old('role', $user->role) == 'admin' ? 'selected' : '' }}>Admin</option>
+                                    <option value="moderator" {{ old('role', $user->role) == 'customer' ? 'selected' : '' }}>customer</option>
+                                    <option value="user" {{ old('role', $user->role) == 'technician' ? 'selected' : '' }}>technician</option>
+                                </select>
+                                @error('role') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
+                            </div>
+                        </div>
 
-                <!-- Role -->
-                <div class="mb-4">
-                    <label for="role" class="block text-gray-700 font-bold mb-2">Role:</label>
-                    <select name="role" id="role"
-                            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-                        <option value="">Select a role</option>
-                        <option value="admin" {{ old('role', $user->role) == 'admin' ? 'selected' : '' }}>Admin</option>
-                        <option value="customer" {{ old('role', $user->role) == 'customer' ? 'selected' : '' }}>Customer</option>
-                        <option value="technician" {{ old('role', $user->role) == 'technician' ? 'selected' : '' }}>Technician</option>
-                    </select>
-                </div>
+                        <div class="space-y-4">
+                            <div>
+                                <label for="phone" class="text-gray-700 font-medium">Phone</label>
+                                <input type="text" id="phone" name="phone" value="{{ old('phone', $user->phone) }}" class="w-full px-4 py-2 mt-2 border rounded-md">
+                                @error('phone') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
+                            </div>
+                        </div>
+                    </div>
 
-                <!-- Phone -->
-                <div class="mb-4">
-                    <label for="phone" class="block text-gray-700 font-bold mb-2">Phone:</label>
-                    <input type="text" name="phone" id="phone" value="{{ old('phone', $user->phone) }}" required
-                           class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-                </div>
-
-                <!-- Password -->
-                <div class="mb-4">
-                    <label for="password" class="block text-gray-700 font-bold mb-2">New Password (leave blank to keep current password):</label>
-                    <input type="password" name="password" id="password"
-                           class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-                </div>
-
-                <!-- Submit Button -->
-                <div class="flex items-center justify-between">
-                    <button type="submit"
-                            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-                        Update User
-                    </button>
-                    <a href="{{ route('users.index') }}"
-                       class="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800">
-                        Cancel
-                    </a>
-                </div>
-            </form>
+                    <div class="mt-6 flex justify-end space-x-4">
+                        <button type="submit" class="px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">
+                            Save Changes
+                        </button>
+                        <a href="{{ route('users.index') }}" class="px-6 py-2 bg-gray-400 text-white rounded-md hover:bg-gray-500">
+                            Cancel
+                        </a>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 </x-app-layout>
