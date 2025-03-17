@@ -52,7 +52,7 @@ class User extends Authenticatable
         ];
     }
 
-    protected $casts = [
+     protected $casts = [
         'role' => 'string',
     ];
 
@@ -69,8 +69,18 @@ class User extends Authenticatable
         return $this->hasMany(MaintenanceRecord::class, 'technician_id');
     }
 
-    public function isAdmin()
-    {
-        return $this->role === 'admin';
-    }
+    // public function isTechnician()
+    // {
+    //     return $this->role === 'technician';
+    // }
+
+    // public function isAdmin()
+    // {
+    //     return $this->role === 'admin';
+    // }
+
+    // public function isCustomer()
+    // {
+    //     return $this->role === 'customer';
+    // }
 }

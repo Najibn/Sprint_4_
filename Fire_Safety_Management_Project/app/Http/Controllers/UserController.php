@@ -13,13 +13,13 @@ class UserController extends Controller
     public function index()
     {
         $users = User::all();
-        return view('users.index', compact('users'));
+        return view('admin.users.index', compact('users'));
     }
 
     // Showing form to create a new user
     public function create()
     {
-        return view('users.create');
+        return view('admin.users.create');
     }
 
     // Save a new user
@@ -37,19 +37,19 @@ class UserController extends Controller
 
         User::create($validatedData);
 
-        return redirect()->route('users.index')->with('success', 'User created successfully');
+        return redirect()->route('admin.users.index')->with('success', 'User created successfully');
     }
 
     //Display a specific user
     public function show(User $user)
     {
-        return view('users.show', compact('user'));
+        return view('admin.users.show', compact('user'));
     }
 
     //Showing form to edit a user
     public function edit(User $user)
     {
-        return view('users.edit', compact('user'));
+        return view('admin.users.edit', compact('user'));
     }
 
 
@@ -69,14 +69,14 @@ class UserController extends Controller
 
         $user->update($validatedData);
 
-        return redirect()->route('users.index')->with('success', 'User updated successfully');
+        return redirect()->route('admin.users.index')->with('success', 'User updated successfully');
     }
 
     // Delete a specific user
     public function destroy(User $user)
     {
         $user->delete();
-        return redirect()->route('users.index')->with('success', 'User deleted successfully');
+        return redirect()->route('admin.users.index')->with('success', 'User deleted successfully');
     }
 
 

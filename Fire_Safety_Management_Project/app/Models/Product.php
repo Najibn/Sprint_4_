@@ -20,18 +20,19 @@ class Product extends Model
         'serial_number',
         'status',
         'location',
+        'assigned_to'
     ];
 
  
     // Relationship: A product belongs to a user (customer/admin)
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class); //'assigned_to'
     }
 
     // Relationship: A product can have many maintenance records
     public function maintenanceRecords()
     {
-        return $this->hasMany(MaintenanceRecord::class);
+        return $this->hasMany(related:MaintenanceRecord::class);
     }
 }
