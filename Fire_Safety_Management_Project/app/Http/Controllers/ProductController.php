@@ -5,19 +5,29 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ProductController extends Controller
 {
     public function index()
     {
-        $products = Product::with('user')->get();
-        return view('products.index', compact('products'));
+        $user = Auth::user();
+        // Fetch products based on user role
+        $products = match ($user->role) {
+            'customer' => Product::where('status', 'Active')->paginate(12),
+            'technician' => Product::where('status', 'Needs Maintenance')->paginate(12),
+            'admin' => Product::with('user')->paginate(12),
+            default =>  Product::query()->paginate(12), //collect(),to return empty collection if role is unknown or default => abort(403)
+        };
+    
+        return view('admin.products.index', compact('user', 'products'));
+   
     }
 
     public function create()
     {
         $users = User::all();
-        return view('products.create', compact('users'));
+        return view('admin.products.create', compact('users'));
     }
 
     public function store(Request $request)
@@ -34,23 +44,23 @@ class ProductController extends Controller
 
         Product::create($validatedData);
 
-        return redirect()->route('products.index')->with('success', 'Product created successfully');
+        return redirect()->route('admin.products.index')->with('success', 'Product created successfully');
     }
 
     // viewing specifics products
     public function show(Product $product)
     {
-        return view('products.show', compact('product'));
+        return view('admin.products.show', compact('product'));
     }
 
 
     public function edit(Product $product)
     {
         $users = User::all();
-        return view('products.edit', compact('product', 'users'));
+        return view('admin.products.edit', compact('product', 'users'));
     }
 
-
+    
     public function update(Request $request, Product $product)
     {
         $validatedData = $request->validate([
@@ -65,13 +75,13 @@ class ProductController extends Controller
 
         $product->update($validatedData);
 
-        return redirect()->route('products.index')->with('success', 'Product updated successfully');
+        return redirect()->route('admin.products.index')->with('success', 'Product updated successfully');
     }
 
-    
     public function destroy(Product $product)
     {
         $product->delete();
-        return redirect()->route('products.index')->with('success', 'Product deleted successfully');
+        return redirect()->route('admin.products.index')->with('success', 'Product deleted successfully');
     }
+
 }

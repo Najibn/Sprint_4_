@@ -11,7 +11,7 @@ use Illuminate\View\View;
 
 class AuthenticatedSessionController extends Controller
 {
-    /**
+  /**
      * Display the login view.
      */
     public function create(): View
@@ -25,10 +25,26 @@ class AuthenticatedSessionController extends Controller
     public function store(LoginRequest $request): RedirectResponse
     {
         $request->authenticate();
-
         $request->session()->regenerate();
 
-        return redirect()->intended(route('dashboard', absolute: false));
+        // Get the authenticated user
+        $user = Auth::user();
+
+        // Redirect based on user role
+        return redirect()->intended($this->redirectTo($user));
+    }
+
+    /**
+     * Get the redirect path for the user based on their role.
+     */
+    public function redirectTo($user): string
+    {
+        return match ($user->role) {
+            'admin' => route('admin.dashboard'),
+            'customer' => route('customer.dashboard'),
+            'technician' => route('technician.dashboard'),
+            default => route('login'), // Fallback option if role is not recognized
+        };
     }
 
     /**
@@ -39,7 +55,6 @@ class AuthenticatedSessionController extends Controller
         Auth::guard('web')->logout();
 
         $request->session()->invalidate();
-
         $request->session()->regenerateToken();
 
         return redirect('/');

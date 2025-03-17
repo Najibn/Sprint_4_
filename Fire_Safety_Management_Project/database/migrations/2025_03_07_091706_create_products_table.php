@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('serial_number')->unique();
             $table->enum('status', ['Active', 'Expired', 'Needs Maintenance']);
             $table->string('location');
+            $table->foreignId('assigned_to')->nullable()->constrained('users')->onDelete('set null');
             $table->timestamps();
         });
     }
