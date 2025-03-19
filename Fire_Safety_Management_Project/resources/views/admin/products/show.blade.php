@@ -54,22 +54,26 @@
                             <div><strong class="text-gray-700">Type Capacity:</strong> {{ $product->type_capacity }}</div>
                             <div><strong class="text-gray-700">Serial Number:</strong> {{ $product->serial_number }}</div>
                             <div><strong class="text-gray-700">Location:</strong> {{ $product->location }}</div>
-                            <div><strong class="text-gray-700">Owner:</strong> {{ $product->user->name }}</div>
+                            <div><strong class="text-gray-700">Technician:</strong> {{ $product->user->name }}</div>
 
                             {{-- Status Badge --}}
                             <div>
                                 <strong class="text-gray-700">Status:</strong>  
                                 <span class="px-3 py-1 rounded-full text-white text-sm font-semibold 
-                                    @if($product->status == 'Active') bg-green-700 
-                                    @elseif($product->status == 'Expired') bg-red-700 
-                                    @else bg-yellow-500 @endif">
+                                    {{ $product->status == 'Active' ? 'bg-green-700' : ($product->status == 'Expired' ? 'bg-red-700' : 'bg-yellow-500') }}">
                                     {{ $product->status }}
                                 </span>
                             </div>
                         </div>
 
-                        {{-- Edit Button --}}
-                        <div class="mt-6 flex justify-start">
+                        {{-- Back Button --}}
+                        <div class="mt-6 flex justify-start space-x-4">
+                            <a href="{{ route('admin.products.index') }}" 
+                               class="bg-gray-600 hover:bg-gray-700 text-white font-semibold py-2 px-4 rounded-lg shadow-md transition duration-300">
+                                Back to Products
+                            </a>
+
+                            {{-- Edit Button --}}
                             <a href="{{ route('admin.products.edit', $product) }}" 
                                class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg shadow-md transition duration-300">
                                 Edit Product

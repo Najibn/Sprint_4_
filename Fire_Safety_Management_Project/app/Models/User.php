@@ -69,6 +69,11 @@ class User extends Authenticatable
         return $this->hasMany(MaintenanceRecord::class, 'technician_id');
     }
 
+    public function assignedProducts()
+    {
+    return $this->hasMany(Product::class, 'assigned_to');
+    }
+
     // public function isTechnician()
     // {
     //     return $this->role === 'technician';

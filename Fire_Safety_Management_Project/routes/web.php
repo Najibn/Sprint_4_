@@ -1,14 +1,15 @@
 <?php
 
-use App\Http\Controllers\MaintenanceRecordController;
-use App\Http\Controllers\ProductController;
-use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\UserController;
-use App\Http\Controllers\CustomerController;
 use App\Models\User;
-use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Auth; 
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\TechnicianController;
+use App\Http\Controllers\MaintenanceRecordController;
 
 
 // Welcome page default
@@ -49,9 +50,20 @@ Route::middleware('can:isAdmin')->prefix('admin')->name('admin.')->group(functio
     ]);
 });
 
-// Customer routes
+//customer
 Route::middleware(['auth', 'verified', 'can:isCustomer'])->group(function () {
-    Route::get('/customer/dashboard', [CustomerController::class, 'index'])->name('customer.dashboard');
-    Route::get('/customer/products/{product}', [CustomerController::class, 'showProductDetails'])->name('customer.products.details');
-    Route::post('/customer/products/{product}/add', [CustomerController::class, 'addProduct'])->name('customer.products.add');
+    Route::get('/customer/dashboard', [CustomerController::class, 'dashboard'])->name('customer.dashboard');
+    Route::get('/customer/products/{id}', [CustomerController::class, 'viewProduct'])->name('customer.products.view');
+    Route::get('/customer/products/{id}/edit', [CustomerController::class, 'editProduct'])->name('customer.products.edit');
+    Route::put('/customer/products/{id}', [CustomerController::class, 'updateProduct'])->name('customer.products.update');
 });
+// Maintenance Records Dashboard for technicians only  to view,save and edit 
+Route::middleware(['auth', 'verified', 'can:isTechnician'])->group(function () {
+    Route::get('/technician/dashboard', [TechnicianController::class, 'dashboard'])->name('technician.dashboard');
+    Route::post('/technician/maintenance-records', [TechnicianController::class, 'store'])->name('technician.maintenanceRecords.store');
+    Route::get('/technician/maintenance-records/{id}', [TechnicianController::class, 'show'])->name('technician.maintenanceRecords.show');
+    Route::get('/technician/maintenance-records/{id}/edit', [TechnicianController::class, 'edit'])->name('technician.maintenanceRecords.edit');
+    Route::put('/technician/maintenance-records/{id}', [TechnicianController::class, 'update'])->name('technician.maintenanceRecords.update');
+});
+
+
