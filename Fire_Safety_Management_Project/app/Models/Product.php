@@ -35,4 +35,9 @@ class Product extends Model
     {
         return $this->hasMany(related:MaintenanceRecord::class);
     }
+
+    public function assignedTechnician()
+    {
+    return $this->belongsTo(User::class, 'assigned_to');
+    }
 }

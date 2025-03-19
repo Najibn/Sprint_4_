@@ -10,36 +10,38 @@ use Illuminate\Support\Facades\Auth;
 
 class CustomerController extends Controller
 {
-    /**
-     * Display the customer dashboard with available products.
-     */
-    public function index()
+    public function dashboard()
     {
-        $products = Product::where('status', 'Active')->get();
+        $products = Product::where('user_id', Auth::id())->paginate(10);
         return view('customer.dashboard', compact('products'));
     }
 
-    /**
-     * Assign a product to the logged-in customer.
-     */
-    public function addProduct(Request $request, $productId)
+    public function viewProduct($id)
     {
-        $product = Product::findOrFail($productId);
-        $product->user_id = Auth::id();
-        $product->save();
-
-        return redirect()->route('customer.dashboard')->with('success', 'Product added successfully!');
+        $product = Product::where('user_id', Auth::id())->findOrFail($id);
+        $maintenanceRecords = $product->maintenanceRecords()->latest()->get();
+        return view('customer.products.view', compact('product', 'maintenanceRecords'));
     }
 
-    /**
-     * Show details for a specific product, including maintenance records.
-     */
-    public function showProductDetails($productId)
+    public function editProduct($id)
     {
-        $product = Product::findOrFail($productId);
-        $maintenanceRecords = MaintenanceRecord::where('product_id', $productId)->get();
-
-        return view('customer.product_details', compact('product', 'maintenanceRecords'));
+        $product = Product::where('user_id', Auth::id())->findOrFail($id);
+        return view('customer.products.edit', compact('product'));
     }
-    
+
+    public function updateProduct(Request $request, $id)
+    {
+        $product = Product::where('user_id', Auth::id())->findOrFail($id);
+        
+        $validatedData = $request->validate([
+            'name'     => 'required|string|max:255',
+            'type'          => 'required|in:water,foam,CO2,DCP',
+            'type_capacity' => 'required|string|max:255',
+            'location' => 'required|string|max:255',
+        ]);
+
+        $product->update($validatedData);
+
+        return redirect()->route('customer.dashboard')->with('success', 'Product updated successfully');
+    }
 }
