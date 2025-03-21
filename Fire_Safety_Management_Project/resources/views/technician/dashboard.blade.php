@@ -34,7 +34,7 @@
         <div class="py-12">
             <!-- Header -->
             <div class="flex justify-between items-center mb-4">
-                <h2 class="text-3xl font-bold text-gray-800">Technician Dashboard</h2>
+                <h2 class="text-3xl font-bold text-gray-800">Welcome, Technician: {{ Auth::user()->name }}</h2>
                 {{-- <a href="{{ route('technician.maintenanceRecords.create') }}" 
                    class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
                     Create New Record
@@ -52,6 +52,7 @@
                                 <thead class="bg-gray-50">
                                     <tr>
                                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Product</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Serial_Number</th>
                                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Maintenance Date</th>
                                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Status</th>
                                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Actions</th>
@@ -61,6 +62,7 @@
                                     @foreach($maintenanceRecords as $record)
                                     <tr>
                                         <td class="px-6 py-4 whitespace-nowrap">{{ $record->product->name }}</td>
+                                        <td class="px-6 py-4 whitespace-nowrap">{{ $record->product->serial_number }}</td>
                                         <td class="px-6 py-4 whitespace-nowrap">{{ $record->maintenance_date->format('M d, Y') }}</td>
                                         <td class="px-6 py-4 whitespace-nowrap">
                                             <span class="px-2 py-1 text-sm rounded-full"

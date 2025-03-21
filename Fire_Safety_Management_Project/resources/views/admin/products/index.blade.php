@@ -41,12 +41,14 @@
             <div class="bg-white shadow-lg rounded-lg p-6">
                 <div class="flex justify-between items-center mb-4">
                     <h3 class="text-lg font-semibold">Product List</h3>
-                    <a href="{{ route('admin.products.create') }}" class="bg-blue-600 text-white font-bold py-2 px-4 rounded hover:bg-blue-700">
+                    <a href="{{ route('admin.products.create') }}"
+                        class="bg-blue-600 text-white font-bold py-2 px-4 rounded hover:bg-blue-700">
                         Add New Product
                     </a>
                 </div>
                 @if (session('success'))
-                    <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4" role="alert">
+                    <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4"
+                        role="alert">
                         {{ session('success') }}
                     </div>
                 @endif
@@ -54,42 +56,54 @@
                     <table class="min-w-full divide-y divide-gray-200">
                         <thead class="bg-gradient-to-r from-blue-500 to-indigo-600 text-white">
                             <tr>
+                                <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Sn</th>
                                 <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Name</th>
                                 <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Type</th>
                                 <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Status</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Location</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Actions</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Location
+                                </th>
+                                <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Actions
+                                </th>
                             </tr>
                         </thead>
                         <tbody class="bg-white divide-y divide-gray-200">
                             @foreach ($products as $product)
-                            <tr class="hover:bg-gray-50 transition-colors duration-200">
-                                <td class="px-6 py-4 border-b">{{ $product->name }}</td>
-                                <td class="px-6 py-4 border-b">{{ $product->type }}</td>
-                                <td class="px-6 py-4 border-b">
-                                    @switch($product->status)
-                                        @case('Active')
-                                            <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full">{{ $product->status }}</span>
+                                <tr class="hover:bg-gray-50 transition-colors duration-200">
+                                    <td class="px-6 py-4 border-b font-mono text-gray-600">{{ $product->serial_number }}</td>
+                                    <td class="px-6 py-4 border-b">{{ $product->name }}</td>
+                                    <td class="px-6 py-4 border-b">{{ $product->type }}</td>
+                                    <td class="px-6 py-4 border-b">
+                                        @switch($product->status)
+                                            @case('Active')
+                                                <span
+                                                    class="bg-green-100 text-green-800 px-3 py-1 rounded-full">{{ $product->status }}</span>
                                             @break
-                                        @case('Needs Maintenance')
-                                            <span class="bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full">{{ $product->status }}</span>
+
+                                            @case('Needs Maintenance')
+                                                <span
+                                                    class="bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full">{{ $product->status }}</span>
                                             @break
-                                        @case('Expired')
-                                            <span class="bg-red-100 text-red-800 px-3 py-1 rounded-full">{{ $product->status }}</span>
+
+                                            @case('Expired')
+                                                <span
+                                                    class="bg-red-100 text-red-800 px-3 py-1 rounded-full">{{ $product->status }}</span>
                                             @break
-                                    @endswitch
-                                </td>
-                                <td class="px-6 py-4 border-b">{{ $product->location }}</td>
-                                <td class="px-6 py-4 border-b flex gap-2">
-                                    <a href="{{ route('admin.products.show', $product) }}" class="text-blue-600 hover:underline">View</a>
-                                    <a href="{{ route('admin.products.edit', $product) }}" class="text-indigo-600 hover:underline">Edit</a>
-                                    <form action="{{ route('admin.products.destroy', $product) }}" method="POST">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" onclick="return confirm('Are you sure?')" class="text-red-600 hover:underline">Delete</button>
-                                    </form>
-                                </td>
-                            </tr>
+                                        @endswitch
+                                    </td>
+                                    <td class="px-6 py-4 border-b">{{ $product->location }}</td>
+                                    <td class="px-6 py-4 border-b flex gap-2">
+                                        <a href="{{ route('admin.products.show', $product) }}"
+                                            class="text-blue-600 hover:underline">View</a>
+                                        <a href="{{ route('admin.products.edit', $product) }}"
+                                            class="text-indigo-600 hover:underline">Edit</a>
+                                        <form action="{{ route('admin.products.destroy', $product) }}" method="POST">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" onclick="return confirm('Are you sure?')"
+                                                class="text-red-600 hover:underline">Delete</button>
+                                        </form>
+                                    </td>
+                                </tr>
                             @endforeach
                         </tbody>
                     </table>

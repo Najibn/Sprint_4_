@@ -49,7 +49,7 @@
                         <div class="mb-4">
                             <label for="product_id" class="block text-gray-700 text-sm font-bold mb-2">Product:</label>
                             <select name="product_id" id="product_id" class="block w-full border rounded py-2 px-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500" required>
-                                @foreach ($products as $product)
+                                @foreach ($forms['products']->filter(fn($product) => !$product->technician_id) as $product)
                                     <option value="{{ $product->id }}">{{ $product->name }} (ID: {{ $product->id }})</option>
                                 @endforeach
                             </select>
@@ -58,7 +58,7 @@
                         <div class="mb-4">
                             <label for="technician_id" class="block text-gray-700 text-sm font-bold mb-2">Technician:</label>
                             <select name="technician_id" id="technician_id" class="block w-full border rounded py-2 px-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500" required>
-                                @foreach ($technicians as $technician)
+                                @foreach ($forms['technicians'] as $technician)
                                     <option value="{{ $technician->id }}">{{ $technician->name }}</option>
                                 @endforeach
                             </select>

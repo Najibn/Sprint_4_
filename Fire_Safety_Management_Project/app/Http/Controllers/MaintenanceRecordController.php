@@ -17,21 +17,15 @@ class MaintenanceRecordController extends Controller
 
     public function create()
     {
-        $products = Product::all();
-        $technicians = User::where('role', 'technician')->get();
-        return view('admin.maintenanceRecords.create', compact('products', 'technicians'));
+        $forms = $this->FormInfor();
+        return view('admin.maintenanceRecords.create', compact('forms'));
     }
 
     public function store(Request $request)
     {
-        $validatedData = $request->validate([
-            'product_id' => 'required|exists:products,id',
-            'technician_id' => 'required|exists:users,id',
-            'maintenance_date' => 'required|date',
-            'status' => 'required|in:completed,pending,overdue',
-            'notes' => 'nullable|string',
-        ]);
 
+        $validatedData = $this->Validation($request);
+        
         MaintenanceRecord::create($validatedData);
 
         return redirect()->route('admin.maintenanceRecords.index')->with('success', 'Maintenance Record created successfully');
@@ -46,21 +40,18 @@ class MaintenanceRecordController extends Controller
 
     public function edit(MaintenanceRecord $maintenanceRecord)
     {
+
+        $forms = $this->FormInfor();
+
         $products = Product::all();
-        $technicians = User::where('role', 'technician')->get();
-        return view('admin.maintenanceRecords.edit', compact('maintenanceRecord', 'products', 'technicians'));
+
+        return view('admin.maintenanceRecords.edit', compact('maintenanceRecord', 'forms'));
     }
 
 
     public function update(Request $request, MaintenanceRecord $maintenanceRecord)
     {
-        $validatedData = $request->validate([
-            'product_id' => 'required|exists:products,id',
-            'technician_id' => 'required|exists:users,id',
-            'maintenance_date' => 'required|date',
-            'status'        => 'required|in:completed,pending,overdue',
-            'notes'      => 'nullable|string',
-        ]);
+        $validatedData = $this->Validation($request);
 
         $maintenanceRecord->update($validatedData);
 
@@ -73,4 +64,28 @@ class MaintenanceRecordController extends Controller
         $maintenanceRecord->delete();
         return redirect()->route('admin.maintenanceRecords.index')->with('success', 'Maintenance Record deleted successfully');
     }
+
+    
+    //helpers private functions
+    private function FormInfor(){
+
+        $products = Product::all();
+        $technicians = User::where('role', 'technician')->get();
+
+        return compact('products', 'technicians');
+
+    }
+    private function Validation(Request  $request){
+
+        $validatedData = $request->validate([
+            'product_id' => 'required|exists:products,id',
+            'technician_id' => 'required|exists:users,id',
+            'maintenance_date' => 'required|date',
+            'status'        => 'required|in:completed,pending,overdue',
+            'notes'     => 'nullable|string',
+        ]);
+        return $validatedData;
+
+    }
+
 }

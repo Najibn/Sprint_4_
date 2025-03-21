@@ -61,10 +61,10 @@
                             <div>
                                 <label class="block text-sm font-medium text-gray-700">Status</label>
                                 <span class="inline-flex items-center px-3 py-0.5 rounded-full text-sm font-medium
-                                    {{ $maintenanceRecord->status === 'Completed' ? 'bg-green-100 text-green-800' : 
-                                       ($maintenanceRecord->status === 'Pending' ? 'bg-yellow-100 text-yellow-800' : 
+                                    {{ $maintenanceRecord->status === 'completed' ? 'bg-green-100 text-green-800' : 
+                                       ($maintenanceRecord->status === 'pending' ? 'bg-yellow-100 text-yellow-800' : 
                                        'bg-red-100 text-red-800') }}">
-                                    {{ $maintenanceRecord->status }}
+                                    {{ ucfirst($maintenanceRecord->status) }}
                                 </span>
                             </div>
                         </div>
@@ -77,7 +77,7 @@
 
                             <div>
                                 <label class="block text-sm font-medium text-gray-700">Notes</label>
-                                <textarea rows="4" class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" readonly>{{ $maintenanceRecord->notes }}</textarea>
+                                <p class="mt-1 text-gray-900">{{ $maintenanceRecord->notes ?: 'No notes available' }}</p>
                             </div>
                         </div>
                     </div>
@@ -85,12 +85,12 @@
                     <div class="mt-8 border-t pt-6 flex justify-between">
                         <a href="{{ route('admin.maintenanceRecords.index') }}" 
                            class="px-4 py-2 bg-gray-600 text-white rounded-md hover:bg-gray-700 transition">
-                            Back
+                            Back to List
                         </a>
                         
                         <a href="{{ route('admin.maintenanceRecords.edit', $maintenanceRecord->id) }}" 
                            class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition">
-                            Update Record
+                            Edit Record
                         </a>
                     </div>
                 </div>
