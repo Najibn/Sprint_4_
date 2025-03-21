@@ -33,18 +33,38 @@ class RegisteredUserController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'phone' => ['required', 'string', 'max:20'],
+            'role' => ['required', 'string', 'in:customer,technician,admin'],
         ]);
 
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'phone'  => $request->phone,
+            'role' => $request->role,
         ]);
 
         event(new Registered($user));
 
         Auth::login($user);
 
-        return redirect(route('dashboard', absolute: false));
+        // Redirect based on user role
+        return redirect($this->redirectTo($user));//redirect(route('dashboard', absolute: false));
+        
     }
+
+    //Get the redirect path based on user role.
+    public function redirectTo(User $user): string
+   {
+    return match ($user->role) {
+        'admin' => route('admin.dashboard'),
+        'customer' => route('customer.dashboard'),
+        'technician' => route('technician.dashboard'),
+        default => route('login'), // Fallback option 
+    };
+   }
+
+   
+
 }
