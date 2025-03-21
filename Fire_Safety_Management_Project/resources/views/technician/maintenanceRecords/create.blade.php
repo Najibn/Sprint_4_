@@ -1,1 +1,0 @@
-{{-- for advance technician functions --}}
