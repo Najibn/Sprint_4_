@@ -65,15 +65,16 @@
                 </div>
 
                 <!-- Maintenance Records -->
-                <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                 <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                     <div class="p-6 bg-white border-b border-gray-200">
-                        <h3 class="text-lg font-semibold mb-4">Maintenance Records</h3>
+                        <h3 class="text-lg font-semibold mb-4">Maintenance Records Status</h3>
                         @if($maintenanceRecords->isEmpty())
                             <p class="text-gray-500">No maintenance records found.</p>
                         @else
                             <table class="min-w-full divide-y divide-gray-200">
                                 <thead class="bg-gray-50">
                                     <tr>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
                                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
                                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
                                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Notes</th>
@@ -82,6 +83,7 @@
                                 <tbody class="bg-white divide-y divide-gray-200">
                                     @foreach($maintenanceRecords as $record)
                                     <tr>
+                                        <td class="px-6 py-4 whitespace-nowrap">{{ $record->id }}</td>
                                         <td class="px-6 py-4 whitespace-nowrap">{{ $record->maintenance_date->format('M d, Y') }}</td>
                                         <td class="px-6 py-4 whitespace-nowrap">
                                             <span class="px-2 py-1 text-sm rounded-full 

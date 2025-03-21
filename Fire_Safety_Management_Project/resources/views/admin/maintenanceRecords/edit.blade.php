@@ -49,7 +49,7 @@
                                 <div class="mb-4">
                                     <label for="product_id" class="block text-gray-700 text-sm font-bold mb-2">Product:</label>
                                     <select name="product_id" id="product_id" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
-                                        @foreach ($products as $product)
+                                        @foreach ($forms['products'] as $product)
                                             <option value="{{ $product->id }}" {{ $maintenanceRecord->product_id == $product->id ? 'selected' : '' }}>{{ $product->name }}</option>
                                         @endforeach
                                     </select>
@@ -59,7 +59,7 @@
                                 <div class="mb-4">
                                     <label for="technician_id" class="block text-gray-700 text-sm font-bold mb-2">Technician:</label>
                                     <select name="technician_id" id="technician_id" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
-                                        @foreach ($technicians as $technician)
+                                        @foreach ($forms['technicians'] as $technician)
                                             <option value="{{ $technician->id }}" {{ $maintenanceRecord->technician_id == $technician->id ? 'selected' : '' }}>{{ $technician->name }}</option>
                                         @endforeach
                                     </select>
@@ -84,7 +84,7 @@
                                 <!-- Notes -->
                                 <div class="mb-4">
                                     <label for="notes" class="block text-gray-700 text-sm font-bold mb-2">Notes:</label>
-                                    <textarea name="notes" id="notes" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">{{ $maintenanceRecord->notes }}</textarea>
+                                    <textarea name="notes" id="notes" rows="4" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">{{ $maintenanceRecord->notes }}</textarea>
                                 </div>
 
                                 <!-- Submit Button -->

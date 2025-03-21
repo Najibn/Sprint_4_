@@ -49,6 +49,7 @@
                                         <tr>
                                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Product</th>
                                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Type</th>
+                                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Capacity</th>
                                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Serial Number</th>
                                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
                                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
@@ -59,6 +60,7 @@
                                         <tr>
                                             <td class="px-6 py-4 whitespace-nowrap">{{ $product->name }}</td>
                                             <td class="px-6 py-4 whitespace-nowrap">{{ $product->type }}</td>
+                                            <td class="px-6 py-4 whitespace-nowrap">{{ $product->type_capacity }}</td>
                                             <td class="px-6 py-4 whitespace-nowrap">{{ $product->serial_number }}</td>
                                             <td class="px-6 py-4 whitespace-nowrap">
                                                 <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full 

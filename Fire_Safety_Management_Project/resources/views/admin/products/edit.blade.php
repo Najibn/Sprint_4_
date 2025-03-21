@@ -37,12 +37,7 @@
 
         <!-- Main Content -->
         <div class="ml-64 p-8 w-full">
-            <x-slot name="header">
-                <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                    {{ __('Update Product') }}
-                </h2>
-            </x-slot>
-
+            <h2 class="text-3xl font-bold mb-6 text-gray-800">Update Products</h2>
             <div class="py-12">
                 <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                     <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
@@ -53,69 +48,134 @@
 
                                 {{-- User Dropdown --}}
                                 <div class="mb-4">
-                                    <label for="user_id" class="block text-gray-700 text-sm font-bold mb-2">User:</label>
-                                    <select name="user_id" id="user_id" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
+                                    <label for="user_id"
+                                        class="block text-gray-700 text-sm font-bold mb-2">User:</label>
+                                    <select name="user_id" id="user_id"
+                                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                        required>
                                         @foreach ($users as $user)
-                                            <option value="{{ $user->id }}" {{ $product->user_id == $user->id ? 'selected' : '' }}>{{ $user->name }}</option>
+                                            @if ($user->role == 'customer')
+                                                <option value="{{ $user->id }}"
+                                                    {{ $product->user_id == $user->id ? 'selected' : '' }}>
+                                                    {{ $user->name }}</option>
+                                            @endif
                                         @endforeach
                                     </select>
                                 </div>
 
                                 {{-- Product Name Dropdown --}}
                                 <div class="mb-4">
-                                    <label for="name" class="block text-gray-700 text-sm font-bold mb-2">Name:</label>
-                                    <select name="name" id="name" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
-                                        <option value="Fire Extinguisher" {{ $product->name == 'Fire Extinguisher' ? 'selected' : '' }}>Fire Extinguisher</option>
-                                        <option value="Smoke Detector" {{ $product->name == 'Smoke Detector' ? 'selected' : '' }}>Smoke Detector</option>
-                                        <option value="Fire Alarm" {{ $product->name == 'Fire Alarm' ? 'selected' : '' }}>Fire Alarm</option>
+                                    <label for="name"
+                                        class="block text-gray-700 text-sm font-bold mb-2">Name:</label>
+                                    <select name="name" id="name"
+                                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                        required>
+                                        <option value="Fire Extinguisher"
+                                            {{ $product->name == 'Fire Extinguisher' ? 'selected' : '' }}>Fire
+                                            Extinguisher</option>
+                                        <option value="Smoke Detector"
+                                            {{ $product->name == 'Smoke Detector' ? 'selected' : '' }}>Smoke Detector
+                                        </option>
+                                        <option value="Fire Alarm"
+                                            {{ $product->name == 'Fire Alarm' ? 'selected' : '' }}>Fire Alarm</option>
                                     </select>
                                 </div>
 
                                 {{-- Product Type Dropdown --}}
                                 <div class="mb-4">
-                                    <label for="type" class="block text-gray-700 text-sm font-bold mb-2">Type:</label>
-                                    <select name="type" id="type" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
-                                        <option value="water" {{ $product->type == 'water' ? 'selected' : '' }}>Water</option>
-                                        <option value="foam" {{ $product->type == 'foam' ? 'selected' : '' }}>Foam</option>
-                                        <option value="CO2" {{ $product->type == 'CO2' ? 'selected' : '' }}>CO2</option>
-                                        <option value="DCP" {{ $product->type == 'DCP' ? 'selected' : '' }}>DCP</option>
+                                    <label for="type"
+                                        class="block text-gray-700 text-sm font-bold mb-2">Type:</label>
+                                    <select name="type" id="type"
+                                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                        required>
+                                        <option value="water" {{ $product->type == 'water' ? 'selected' : '' }}>Water
+                                        </option>
+                                        <option value="foam" {{ $product->type == 'foam' ? 'selected' : '' }}>Foam
+                                        </option>
+                                        <option value="CO2" {{ $product->type == 'CO2' ? 'selected' : '' }}>CO2
+                                        </option>
+                                        <option value="DCP" {{ $product->type == 'DCP' ? 'selected' : '' }}>DCP
+                                        </option>
                                     </select>
                                 </div>
 
                                 {{-- Type Capacity Input --}}
                                 <div class="mb-4">
-                                    <label for="type_capacity" class="block text-gray-700 text-sm font-bold mb-2">Type Capacity:</label>
-                                    <input type="text" name="type_capacity" id="type_capacity" value="{{ $product->type_capacity }}" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
+                                    <label for="type_capacity" class="block text-gray-700 text-sm font-bold mb-2">Type
+                                        Capacity:</label>
+                                    <input type="text" name="type_capacity" id="type_capacity"
+                                        value="{{ $product->type_capacity }}"
+                                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                        required>
                                 </div>
 
                                 {{-- Serial Number Input --}}
                                 <div class="mb-4">
-                                    <label for="serial_number" class="block text-gray-700 text-sm font-bold mb-2">Serial Number:</label>
-                                    <input type="text" name="serial_number" id="serial_number" value="{{ $product->serial_number }}" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
+                                    <label for="serial_number" class="block text-gray-700 text-sm font-bold mb-2">Serial
+                                        Number:</label>
+                                    <input type="text" name="serial_number" id="serial_number"
+                                        value="{{ $product->serial_number }}"
+                                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                        required>
                                 </div>
 
                                 {{-- Status Dropdown --}}
                                 <div class="mb-4">
-                                    <label for="status" class="block text-gray-700 text-sm font-bold mb-2">Status:</label>
-                                    <select name="status" id="status" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
-                                        <option value="Active" {{ $product->status == 'Active' ? 'selected' : '' }}>Active</option>
-                                        <option value="Expired" {{ $product->status == 'Expired' ? 'selected' : '' }}>Expired</option>
-                                        <option value="Needs Maintenance" {{ $product->status == 'Needs Maintenance' ? 'selected' : '' }}>Needs Maintenance</option>
+                                    <label for="status"
+                                        class="block text-gray-700 text-sm font-bold mb-2">Status:</label>
+                                    <select name="status" id="status"
+                                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                        required onchange="this.form.submit()">
+                                        <option value="Active"
+                                            {{ old('status', $product->status) == 'Active' ? 'selected' : '' }}>Active
+                                        </option>
+                                        <option value="Expired"
+                                            {{ old('status', $product->status) == 'Expired' ? 'selected' : '' }}>
+                                            Expired</option>
+                                        <option value="Needs Maintenance"
+                                            {{ old('status', $product->status) == 'Needs Maintenance' ? 'selected' : '' }}>
+                                            Needs Maintenance</option>
                                     </select>
                                 </div>
 
+                                {{-- Show Technician Dropdown Only if "Needs Maintenance" is Selected --}}
+                                @if (old('status', $product->status) == 'Needs Maintenance')
+                                    <div class="mb-4">
+                                        <label for="technician_id"
+                                            class="block text-gray-700 text-sm font-bold mb-2">Assign
+                                            Technician:</label>
+                                        <select name="technician_id" id="technician_id"
+                                            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                                            <option value="">-- Select Technician --</option>
+                                            @foreach ($users as $user)
+                                                @if ($user->role == 'technician')
+                                                    <option value="{{ $user->id }}"
+                                                        {{ old('technician_id', $product->technician_id) == $user->id ? 'selected' : '' }}>
+                                                        {{ $user->name }}</option>
+                                                @endif
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                @endif
+
                                 {{-- Location Input --}}
                                 <div class="mb-4">
-                                    <label for="location" class="block text-gray-700 text-sm font-bold mb-2">Location:</label>
-                                    <input type="text" name="location" id="location" value="{{ $product->location }}" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
+                                    <label for="location"
+                                        class="block text-gray-700 text-sm font-bold mb-2">Location:</label>
+                                    <input type="text" name="location" id="location"
+                                        value="{{ $product->location }}"
+                                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                        required>
                                 </div>
 
                                 {{-- Buttons --}}
                                 <div class="flex items-center justify-between">
-                                    <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                                    <button type="submit"
+                                        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
                                         Update Product
                                     </button>
-                                    <a href="{{ route('admin.products.index') }}" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                                    <a href="{{ route('admin.products.index') }}"
+                                        class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
                                         Cancel
                                     </a>
                                 </div>

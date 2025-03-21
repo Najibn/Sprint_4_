@@ -54,7 +54,8 @@
                             <div><strong class="text-gray-700">Type Capacity:</strong> {{ $product->type_capacity }}</div>
                             <div><strong class="text-gray-700">Serial Number:</strong> {{ $product->serial_number }}</div>
                             <div><strong class="text-gray-700">Location:</strong> {{ $product->location }}</div>
-                            <div><strong class="text-gray-700">Technician:</strong> {{ $product->user->name }}</div>
+                            <div><strong class="text-gray-700">Customer:</strong> {{ $product->user->name }}</div>
+                            <div><strong class="text-gray-700">Email:</strong> {{ $product->user->email }}</div>
 
                             {{-- Status Badge --}}
                             <div>

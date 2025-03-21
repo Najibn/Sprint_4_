@@ -59,27 +59,6 @@ class TechnicianController extends Controller
                 ->with('success', 'Maintenance record updated successfully.');
         }
     
-        // Create new maintenance record form
-       /* public function create()
-        {
-
-            $products = Product::where('user_id', Auth::id())->get();
-    
-    $latestMaintenanceDates = MaintenanceRecord::whereIn('product_id', $products->pluck('id'))
-        ->selectRaw('product_id, MAX(maintenance_date) as latest_date')
-        ->groupBy('product_id')
-        ->pluck('latest_date', 'product_id');
-
-    return view('technician.maintenanceRecords.create', compact('products', 'latestMaintenanceDates'));
-
-            /*$products = Product::whereHas('maintenanceRecords', function ($query) {
-                $query->where('technician_id', Auth::id());
-            })->get();
-        
-            return view('technician.maintenanceRecords.create', compact('products'));
-        }
-        */
-    
         // Store new maintenance record
         public function store(Request $request)
         {
